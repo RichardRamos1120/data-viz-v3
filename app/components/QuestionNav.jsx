@@ -28,9 +28,7 @@ export default function Page() {
     return (
         <section className='main-nav'>
             <div>
-                <div>
-                    <Image src='/logo.svg' width={213} height={37} alt="Image" />
-                </div>
+    
                 <div>
                     <nav className='nav-item'>
                         {navItems.map((item, index) => {
@@ -46,7 +44,7 @@ export default function Page() {
                                     <div className={selectedItem && selectedItem === item ? "" : "hidden"}>
                                         {item.navItems.map((navItem, index) => {
                                             return (
-                                                <ul className="nav-submenu" key={navItem.slug}>
+                                                <ul className="nav-submenu" key={navItem[index]}>
                                                     <li>
                                                         <Link
                                                             href={`/questions/${navItem.slug}`}

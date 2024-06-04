@@ -6,7 +6,7 @@ export default function Page({filterValue, onFilterChange}) {
 
   const handleInputChange = (event) => {
     // Update filter value
-    onFilterChange(event.target.value);
+    onFilterChange(event.target.id);
   };
 
   const categories = [
@@ -52,7 +52,7 @@ export default function Page({filterValue, onFilterChange}) {
         <div>
           {filters.map((filter, index) => (
             <div key={index} className='flex gap-2'>
-              <input type='radio' id={filter.slug} name="filter" onChange={handleInputChange} checked={filterValue === filter.name}/>
+              <input type='radio' id={filter.slug} name="filter" onChange={handleInputChange} />
               <label htmlFor={filter.slug}>{filter.name}</label>
             </div>
           ))}
