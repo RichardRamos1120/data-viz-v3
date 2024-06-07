@@ -2,6 +2,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { fetchData } from '@/app/utils/fetchData';
 import MyChart from '@/app/components/MyChart';
+import { useSearchParams } from 'next/navigation'
+
 
 
 const processData = async (id) => {
@@ -22,7 +24,8 @@ const processData = async (id) => {
     return { data, raw }; // Return the counts object
 };
 
-export default function Page({ params, filterValue }) {
+export default function Page({ params }) {
+    const searchParams = useSearchParams();
     const colors = [
         'rgb(109, 110, 112)',
         'rgb(215, 124, 42)',
@@ -39,8 +42,9 @@ export default function Page({ params, filterValue }) {
     const id = params.slug;
 
     useEffect(() => {
-        console.log("Filter Value:", filterValue); // Logging filterValue
-        async function getData() {
+    
+        // Fetch the zones data
+        async function getDataZones() {
             let chartData = await processData(id);
             let chartZones = await processData("zone");
             let chartZonesArea = Object.keys(chartZones.data);
@@ -83,8 +87,65 @@ export default function Page({ params, filterValue }) {
 
             if (labelsNew.length >= 10) barType.current = "pie";
         }
-        getData();
-    }, [id, filterValue]); // Re-run effect when id or filterValue changes
+
+        //Fetch the Gender data
+        async function getDataGender() {
+            let chartData = await processData(id);
+            let chartZones = await processData("Q46");
+            let chartZonesArea = Object.keys(chartZones.data);
+
+            let chartAllData = Object.values(chartData.data);
+            let labelsNew = Object.keys(chartData.data);
+
+            const datasetsNew = [];
+
+            for (let i = 0; i < chartZonesArea.length; i++) {
+                // Filter the data each for zone
+                let chartDataFiltered = chartData.raw.filter((item) => item["Q46"] === chartZonesArea[i]);
+
+                // Get the current question data
+                const result = chartDataFiltered.map((item) => item[`${id}`]);
+
+                // Count the same data
+                const data = result.reduce((acc, curr) => {
+                    if (curr === "") return acc;
+                    if (!acc[curr]) {
+                        acc[curr] = 0;
+                    }
+                    acc[curr]++;
+                    return acc;
+                }, {});
+
+                let newChartAllData = Object.values(data);
+
+                let randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+                datasetsNew.push({
+                    label: chartZonesArea[i],
+                    data: newChartAllData,
+                    backgroundColor: randomColor,
+                });
+            }
+
+            setLabels(labelsNew);
+            setDatasets(datasetsNew);
+
+            if (labelsNew.length >= 10) barType.current = "pie";
+        }
+
+        if (searchParams.get('filter') === 'gender') {
+            getDataGender();
+        } else getDataZones();
+
+
+
+
+
+        return () => 0;
+
+
+        
+    }, [id, searchParams.get('filter')]); // Re-run effect when id or filterValue changes
 
     return (
         <section>
