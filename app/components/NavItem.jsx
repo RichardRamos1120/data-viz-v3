@@ -31,7 +31,7 @@ const navItems = [
         },
         {
           name:"Question 15",
-          slug: "Q14",
+          slug: "Q15",
           details: "This is a test"
         }
       ]
