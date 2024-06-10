@@ -10,7 +10,8 @@ import Image from 'next/image';
 
 const query = [
     {text: "Q3 How concerned are you about the risk of wildfires to your household? Scale of 1 to 5", link: "/questions/Q3"},
-    {text: "Q15 Question 15", link: "/questions/Q15"},
+    {text: "Q14 Which of the following sources do you use the most to get information about preparing for future wildfires?", link: "/questions/Q14"},
+    {text: "Q15 Which of the following would you most likely do to better prepare for wildfires?", link: "/questions/Q15"},
     {text: "Q12 How concerned are you about getting or keeping wildfire insurance? Scale of 1 to 5", link: "/questions/12"},
     {text: "Q13 Do you have a concern not previously listed about wildfire risk to your household?", link: "/questions/Q13"},
 

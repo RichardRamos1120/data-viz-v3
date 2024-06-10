@@ -29,6 +29,14 @@ export default function Page() {
       name: 'Gender',
       slug: 'gender',
     },
+    {
+      name: 'Income',
+      slug: 'income',
+    },
+    {
+      name: 'Ethnicity',
+      slug: 'ethnicity',
+    },
   ];
 
   useEffect(() => { 
