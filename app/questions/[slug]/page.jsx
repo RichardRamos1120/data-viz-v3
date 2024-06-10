@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation'
 
 
 const processData = async (id) => {
-    let raw = await fetchData(`https://data-visual-v2.vercel.app/MWPA_Survey3_1.csv`);
+    let raw = await fetchData(`https://data-viz-v3.vercel.app/data.csv`);
     // Get the current question data
     const result = raw.map((item) => item[`${id}`]);
 
