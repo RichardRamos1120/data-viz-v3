@@ -2,16 +2,36 @@
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-export default function MyChart({ labels, datasets, qTitle, barType}) {
+export default function MyChart({ labels, datasets, qTitle, barType }) {
     const myChart = useRef(null);
 
     useEffect(() => {
         if (labels && datasets) {
+            // Calculate totals for each label
+            const totals = labels.map((_, i) => {
+                return datasets.reduce((sum, dataset) => sum + (dataset.data[i] || 0), 0);
+            });
+
+            // Convert data to percentages, handling division by zero
+            const percentageDatasets = datasets.map(dataset => {
+                return {
+                    ...dataset,
+                    data: dataset.data.map((value, i) => {
+                        if (totals[i] === 0) {
+                            return 0; // or handle it in a different way if needed
+                        }
+                        return (value / totals[i]) * 100;
+                    })
+                };
+            });
+
+            // console.log(percentageDatasets);
+
             const chartInstance = new Chart(myChart.current, {
                 type: barType.current,
                 data: {
                     labels: labels,
-                    datasets: datasets
+                    datasets: percentageDatasets
                 },
                 options: {
                     plugins: {
@@ -23,13 +43,19 @@ export default function MyChart({ labels, datasets, qTitle, barType}) {
                     responsive: true,
                     scales: {
                         x: {
-                            stacked: true
+                            stacked: true,
                         },
                         y: {
                             stacked: true,
-                            min: 0
-                        }
-                    }
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value) {
+                                    return value + '%'; // Display percentages on the y-axis
+                                },
+                            },
+                            max: 100, // Maximum value for percentage
+                        },
+                    },
                 }
             });
 
