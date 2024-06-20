@@ -13,11 +13,11 @@ const navItems = [
           slug: "Q12",
           details: "This is a test"
         },
-        {
-          name:"Question 13",
-          slug: "Q13",
-          details: "This is a test"
-        }
+        // {
+        //   name:"Question 13",
+        //   slug: "Q13",
+        //   details: "This is a test"
+        // }
       ]
     },
     {

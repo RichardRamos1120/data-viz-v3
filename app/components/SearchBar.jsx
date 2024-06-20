@@ -13,7 +13,7 @@ const query = [
     {text: "Q14 Which of the following sources do you use the most to get information about preparing for future wildfires?", link: "/questions/Q14"},
     {text: "Q15 Which of the following would you most likely do to better prepare for wildfires?", link: "/questions/Q15"},
     {text: "Q12 How concerned are you about getting or keeping wildfire insurance? Scale of 1 to 5", link: "/questions/12"},
-    {text: "Q13 Do you have a concern not previously listed about wildfire risk to your household?", link: "/questions/Q13"},
+    // {text: "Q13 Do you have a concern not previously listed about wildfire risk to your household?", link: "/questions/Q13"},
 
     { text: "Q4 How concerned are you about traffic preventing you from leaving your neighborhood during an evacuation? ○ Scale of 1 to 5", link: "/questions/Q4" },
     { text: "Q5 How concerned are you about getting out of your home quickly enough during an evacuation? ○ Scale of 1 to 5", link: "/questions/Q5" },
