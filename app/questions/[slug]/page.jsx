@@ -244,7 +244,7 @@ export default function Page({ params }) {
                     setLabels(labelsNew);
                     setDatasets(datasetsNew);
         
-                    if (labelsNew.length >= 10) barType.current = "pie";
+                    if (labelsNew.length >= 30) barType.current = "pie";
         }
 
         if (searchParams.get('filter') === 'gender') {
