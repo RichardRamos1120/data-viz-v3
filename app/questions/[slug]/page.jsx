@@ -109,7 +109,7 @@ export default function Page({ params }) {
             setLabels(labelsNew);
             setDatasets(datasetsNew);
 
-            if (labelsNew.length >= 10) barType.current = "pie";
+            if (labelsNew.length >= 20) barType.current = "pie";
         }
 
         //Fetch the Gender data
