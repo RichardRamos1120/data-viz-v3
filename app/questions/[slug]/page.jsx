@@ -109,7 +109,7 @@ export default function Page({ params }) {
             setLabels(labelsNew);
             setDatasets(datasetsNew);
 
-            if (labelsNew.length >= 20) barType.current = "pie";
+            
         }
 
         //Fetch the Gender data
@@ -154,7 +154,7 @@ export default function Page({ params }) {
             setLabels(labelsNew);
             setDatasets(datasetsNew);
 
-            if (labelsNew.length >= 10) barType.current = "pie";
+            
         }
 
                 //Fetch the Ethnicity data
@@ -199,7 +199,7 @@ export default function Page({ params }) {
                     setLabels(labelsNew);
                     setDatasets(datasetsNew);
         
-                    if (labelsNew.length >= 10) barType.current = "pie";
+                    
         }
 
                 //Fetch the Income data
@@ -244,7 +244,7 @@ export default function Page({ params }) {
                     setLabels(labelsNew);
                     setDatasets(datasetsNew);
         
-                    // if (labelsNew.length >= 30) barType.current = "pie";
+                    
         }
 
         if (searchParams.get('filter') === 'gender') {
