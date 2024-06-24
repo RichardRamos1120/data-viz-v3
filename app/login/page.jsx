@@ -24,16 +24,16 @@ export default function Login() {
     };
 
     useEffect(() => {
-        if (localStorage.getItem("user") === "admin") {
-            router.push('/questions')
-        }
+            if (typeof window !== "undefined" && localStorage.getItem("user") === "admin"){
+                router.push('/questions')
+            }
 
-    }
-    , [])
+        }
+        , [])
 
     return (
         <div className={styles.container}>
-            {localStorage.getItem("user") === "admin" ? <h1>You are already logged in</h1> :
+            {typeof window !== "undefined" && localStorage.getItem("user") === "admin" ? <h1>You are already logged in</h1> :
 
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <h1 className={styles.title}>Login</h1>
