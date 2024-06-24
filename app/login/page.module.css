@@ -1,0 +1,54 @@
+/* styles/page.module.css */
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f0f2f5;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.title {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.input:focus {
+    border-color: #0070f3;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 112, 243, 0.5);
+}
+
+.button {
+    padding: 10px;
+    background-color: #0070f3;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #005bb5;
+}

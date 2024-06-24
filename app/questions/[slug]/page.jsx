@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { fetchData } from '@/app/utils/fetchData';
 import MyChart from '@/app/components/MyChart';
 import { useSearchParams } from 'next/navigation'
+import {useRouter} from "next/navigation";
 
 
 
@@ -65,205 +66,217 @@ export default function Page({ params }) {
 
     const id = params.slug;
 
+    const router = useRouter();
     useEffect(() => {
-    
-        // Fetch the zones data
-        async function getDataZones() {
-            let chartData = await processData(id);
-            let chartZones = await processData("zone");
-            let chartZonesArea = Object.keys(chartZones.data);
 
-            let chartAllData = Object.values(chartData.data);
-            let labelsNew = Object.keys(chartData.data);
+        // Redirect to login page if user is not admin
+        if (localStorage.getItem("user") !== "admin") {
+            router.push('/login')
+        }
 
-            const datasetsNew = [];
+        else {
 
-            for (let i = 0; i < chartZonesArea.length; i++) {
-                // Filter the data each for zone
-                let chartDataFiltered = chartData.raw.filter((item) => item["zone"] === chartZonesArea[i]);
+            // Fetch the zones data
+            async function getDataZones() {
+                let chartData = await processData(id);
+                let chartZones = await processData("zone");
+                let chartZonesArea = Object.keys(chartZones.data);
 
-                // Get the current question data
-                const result = chartDataFiltered.map((item) => item[`${id}`]);
+                let chartAllData = Object.values(chartData.data);
+                let labelsNew = Object.keys(chartData.data);
 
-                // Count the same data
-                const data = result.reduce((acc, curr) => {
-                    if (curr === "") return acc;
-                    if (!acc[curr]) {
-                        acc[curr] = 0;
-                    }
-                    acc[curr]++;
-                    return acc;
-                }, {});
+                const datasetsNew = [];
 
-                let newChartAllData = Object.values(data);
+                for (let i = 0; i < chartZonesArea.length; i++) {
+                    // Filter the data each for zone
+                    let chartDataFiltered = chartData.raw.filter((item) => item["zone"] === chartZonesArea[i]);
 
-                let randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    // Get the current question data
+                    const result = chartDataFiltered.map((item) => item[`${id}`]);
 
-                datasetsNew.push({
-                    label: chartZonesArea[i],
-                    data: newChartAllData,
-                    backgroundColor: colors[i],
-                });
+                    // Count the same data
+                    const data = result.reduce((acc, curr) => {
+                        if (curr === "") return acc;
+                        if (!acc[curr]) {
+                            acc[curr] = 0;
+                        }
+                        acc[curr]++;
+                        return acc;
+                    }, {});
+
+                    let newChartAllData = Object.values(data);
+
+                    let randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+                    datasetsNew.push({
+                        label: chartZonesArea[i],
+                        data: newChartAllData,
+                        backgroundColor: colors[i],
+                    });
+                }
+
+                setLabels(labelsNew);
+                setDatasets(datasetsNew);
+
+
             }
 
-            setLabels(labelsNew);
-            setDatasets(datasetsNew);
+            //Fetch the Gender data
+            async function getDataGender() {
+                let chartData = await processData(id);
+                let chartZones = await processData("Q46");
+                let chartZonesArea = Object.keys(chartZones.data);
 
-            
-        }
+                let chartAllData = Object.values(chartData.data);
+                let labelsNew = Object.keys(chartData.data);
 
-        //Fetch the Gender data
-        async function getDataGender() {
-            let chartData = await processData(id);
-            let chartZones = await processData("Q46");
-            let chartZonesArea = Object.keys(chartZones.data);
+                const datasetsNew = [];
 
-            let chartAllData = Object.values(chartData.data);
-            let labelsNew = Object.keys(chartData.data);
+                for (let i = 0; i < chartZonesArea.length; i++) {
+                    // Filter the data each for zone
+                    let chartDataFiltered = chartData.raw.filter((item) => item["Q46"] === chartZonesArea[i]);
 
-            const datasetsNew = [];
+                    // Get the current question data
+                    const result = chartDataFiltered.map((item) => item[`${id}`]);
 
-            for (let i = 0; i < chartZonesArea.length; i++) {
-                // Filter the data each for zone
-                let chartDataFiltered = chartData.raw.filter((item) => item["Q46"] === chartZonesArea[i]);
+                    // Count the same data
+                    const data = result.reduce((acc, curr) => {
+                        if (curr === "") return acc;
+                        if (!acc[curr]) {
+                            acc[curr] = 0;
+                        }
+                        acc[curr]++;
+                        return acc;
+                    }, {});
 
-                // Get the current question data
-                const result = chartDataFiltered.map((item) => item[`${id}`]);
+                    let newChartAllData = Object.values(data);
 
-                // Count the same data
-                const data = result.reduce((acc, curr) => {
-                    if (curr === "") return acc;
-                    if (!acc[curr]) {
-                        acc[curr] = 0;
-                    }
-                    acc[curr]++;
-                    return acc;
-                }, {});
+                    let randomColor = colors[Math.floor(Math.random() * colors.length)];
 
-                let newChartAllData = Object.values(data);
+                    datasetsNew.push({
+                        label: chartZonesArea[i],
+                        data: newChartAllData,
+                        backgroundColor: colors[i],
+                    });
+                }
 
-                let randomColor = colors[Math.floor(Math.random() * colors.length)];
+                setLabels(labelsNew);
+                setDatasets(datasetsNew);
 
-                datasetsNew.push({
-                    label: chartZonesArea[i],
-                    data: newChartAllData,
-                    backgroundColor: colors[i],
-                });
+
             }
 
-            setLabels(labelsNew);
-            setDatasets(datasetsNew);
+            //Fetch the Ethnicity data
+            async function getDataEthnicity() {
+                let chartData = await processData(id);
+                let chartZones = await processData("Q45");
+                let chartZonesArea = Object.keys(chartZones.data);
 
-            
+                let chartAllData = Object.values(chartData.data);
+                let labelsNew = Object.keys(chartData.data);
+
+                const datasetsNew = [];
+
+                for (let i = 0; i < chartZonesArea.length; i++) {
+                    // Filter the data each for zone
+                    let chartDataFiltered = chartData.raw.filter((item) => item["Q45"] === chartZonesArea[i]);
+
+                    // Get the current question data
+                    const result = chartDataFiltered.map((item) => item[`${id}`]);
+
+                    // Count the same data
+                    const data = result.reduce((acc, curr) => {
+                        if (curr === "") return acc;
+                        if (!acc[curr]) {
+                            acc[curr] = 0;
+                        }
+                        acc[curr]++;
+                        return acc;
+                    }, {});
+
+                    let newChartAllData = Object.values(data);
+
+                    let randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+                    datasetsNew.push({
+                        label: chartZonesArea[i],
+                        data: newChartAllData,
+                        backgroundColor: colors[i],
+                    });
+                }
+
+                setLabels(labelsNew);
+                setDatasets(datasetsNew);
+
+
+            }
+
+            //Fetch the Income data
+            async function getDataIncome() {
+                let chartData = await processData(id);
+                let chartZones = await processData("Q47");
+                let chartZonesArea = Object.keys(chartZones.data);
+
+                let chartAllData = Object.values(chartData.data);
+                let labelsNew = Object.keys(chartData.data);
+
+                const datasetsNew = [];
+
+                for (let i = 0; i < chartZonesArea.length; i++) {
+                    // Filter the data each for zone
+                    let chartDataFiltered = chartData.raw.filter((item) => item["Q47"] === chartZonesArea[i]);
+
+                    // Get the current question data
+                    const result = chartDataFiltered.map((item) => item[`${id}`]);
+
+                    // Count the same data
+                    const data = result.reduce((acc, curr) => {
+                        if (curr === "") return acc;
+                        if (!acc[curr]) {
+                            acc[curr] = 0;
+                        }
+                        acc[curr]++;
+                        return acc;
+                    }, {});
+
+                    let newChartAllData = Object.values(data);
+
+                    let randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+                    datasetsNew.push({
+                        label: chartZonesArea[i],
+                        data: newChartAllData,
+                        backgroundColor: colors[i],
+                    });
+                }
+
+                setLabels(labelsNew);
+                setDatasets(datasetsNew);
+
+
+            }
+
+            if (searchParams.get('filter') === 'gender') {
+                getDataGender();
+
+            }else if (searchParams.get('filter') === 'ethnicity') {
+                getDataEthnicity();
+            }
+            else if (searchParams.get('filter') === 'income') {
+                getDataIncome();
+            }
+
+            else getDataZones();
+
+
+
+
+
+            return () => 0;
+
+
+
         }
-
-                //Fetch the Ethnicity data
-        async function getDataEthnicity() {
-                    let chartData = await processData(id);
-                    let chartZones = await processData("Q45");
-                    let chartZonesArea = Object.keys(chartZones.data);
-        
-                    let chartAllData = Object.values(chartData.data);
-                    let labelsNew = Object.keys(chartData.data);
-        
-                    const datasetsNew = [];
-        
-                    for (let i = 0; i < chartZonesArea.length; i++) {
-                        // Filter the data each for zone
-                        let chartDataFiltered = chartData.raw.filter((item) => item["Q45"] === chartZonesArea[i]);
-        
-                        // Get the current question data
-                        const result = chartDataFiltered.map((item) => item[`${id}`]);
-        
-                        // Count the same data
-                        const data = result.reduce((acc, curr) => {
-                            if (curr === "") return acc;
-                            if (!acc[curr]) {
-                                acc[curr] = 0;
-                            }
-                            acc[curr]++;
-                            return acc;
-                        }, {});
-        
-                        let newChartAllData = Object.values(data);
-        
-                        let randomColor = colors[Math.floor(Math.random() * colors.length)];
-        
-                        datasetsNew.push({
-                            label: chartZonesArea[i],
-                            data: newChartAllData,
-                            backgroundColor: colors[i],
-                        });
-                    }
-        
-                    setLabels(labelsNew);
-                    setDatasets(datasetsNew);
-        
-                    
-        }
-
-                //Fetch the Income data
-        async function getDataIncome() {
-                    let chartData = await processData(id);
-                    let chartZones = await processData("Q47");
-                    let chartZonesArea = Object.keys(chartZones.data);
-        
-                    let chartAllData = Object.values(chartData.data);
-                    let labelsNew = Object.keys(chartData.data);
-        
-                    const datasetsNew = [];
-        
-                    for (let i = 0; i < chartZonesArea.length; i++) {
-                        // Filter the data each for zone
-                        let chartDataFiltered = chartData.raw.filter((item) => item["Q47"] === chartZonesArea[i]);
-        
-                        // Get the current question data
-                        const result = chartDataFiltered.map((item) => item[`${id}`]);
-        
-                        // Count the same data
-                        const data = result.reduce((acc, curr) => {
-                            if (curr === "") return acc;
-                            if (!acc[curr]) {
-                                acc[curr] = 0;
-                            }
-                            acc[curr]++;
-                            return acc;
-                        }, {});
-        
-                        let newChartAllData = Object.values(data);
-        
-                        let randomColor = colors[Math.floor(Math.random() * colors.length)];
-        
-                        datasetsNew.push({
-                            label: chartZonesArea[i],
-                            data: newChartAllData,
-                            backgroundColor: colors[i],
-                        });
-                    }
-        
-                    setLabels(labelsNew);
-                    setDatasets(datasetsNew);
-        
-                    
-        }
-
-        if (searchParams.get('filter') === 'gender') {
-            getDataGender();
-        
-        }else if (searchParams.get('filter') === 'ethnicity') {
-            getDataEthnicity();
-        }
-        else if (searchParams.get('filter') === 'income') {
-            getDataIncome();
-        } 
-        
-        else getDataZones();
-
-
-
-
-
-        return () => 0;
 
 
         

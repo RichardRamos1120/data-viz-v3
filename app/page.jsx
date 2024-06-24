@@ -7,7 +7,11 @@ import Image from "next/image";
 export default function Page() {
   const router = useRouter()
   useEffect(() => {  
-    router.push('/questions/')
+    if (localStorage.getItem("user") !== "admin") {
+      router.push('/login')
+    }else {
+      router.push('/questions/')
+    }
 
     return () => 0
   }, [])

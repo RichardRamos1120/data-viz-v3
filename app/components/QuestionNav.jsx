@@ -1,9 +1,11 @@
 "use client";
 import { CaretUp, CaretDown } from "@phosphor-icons/react";
 import React, { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+
 import Link from 'next/link';
 import navItems from '@/app/components/NavItem';
+import { SignOut } from '@phosphor-icons/react';
 
 export default function Page() {
     // side navbar
@@ -21,6 +23,12 @@ export default function Page() {
         setSubItem(item);
     }
 
+    const router = useRouter();
+    function handleLogout() {
+        localStorage.removeItem("user");
+        router.push('/login');
+    }
+
     useEffect(() => {
         return () => 0;
     }, [selectedItem, subItem]);
@@ -28,7 +36,7 @@ export default function Page() {
     return (
         <section className='main-nav'>
             <div>
-    
+
                 <div>
                     <nav className='nav-item'>
                         {navItems.map((item, index) => {
@@ -39,7 +47,8 @@ export default function Page() {
                                         name={item.slug}
                                         onClick={() => handleNavItemClick(item)}
                                     >
-                                        {item.name} {selectedItem && selectedItem === item ? <CaretUp size={18} /> : <CaretDown size={18} />}
+                                        {item.name} {selectedItem && selectedItem === item ? <CaretUp size={18}/> :
+                                        <CaretDown size={18}/>}
                                     </h2>
                                     <div className={selectedItem && selectedItem === item ? "" : "hidden"}>
                                         {item.navItems.map((navItem, index) => {
@@ -64,6 +73,11 @@ export default function Page() {
                         })}
                     </nav>
                 </div>
+
+            </div>
+
+            <div className="self-start">
+                <button onClick={handleLogout} className="font-bold">Log out</button>
             </div>
         </section>
     );

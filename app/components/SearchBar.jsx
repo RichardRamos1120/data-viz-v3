@@ -49,7 +49,7 @@ const query = [
 ]
 
 // display the current time
-const currentTime = new Date().toLocaleTimeString(); 
+const currentTime = new Date().toLocaleTimeString();
 console.log(currentTime);
 
 
@@ -101,7 +101,7 @@ const SearchBar = () => {
                     <input type="text" value={searchTerm} id="search" placeholder='Search here...' autoComplete='off' onChange={handleSearch} onClick={handleInputClick} />
                     <button id="search-button">Search</button>
                 </div>
-                
+
                 <div id="result-wrapper" className={!wrapperVisible ? "hidden" : ""} ref={searchResultWrapper}>
                     {searchResults.map((result, index) => (
                         <div className='questions-list-item' key={index}>
@@ -113,7 +113,8 @@ const SearchBar = () => {
             </div>
 
             </div>
-           
+
+
         </section>
     );
 }
