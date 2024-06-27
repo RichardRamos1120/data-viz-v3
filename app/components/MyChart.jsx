@@ -1,16 +1,21 @@
 "use client";
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
+import { useSearchParams } from 'next/navigation';
 
 export default function MyChart({ labels, datasets, qTitle, barType }) {
     const myChart = useRef(null);
+    const searchParams = useSearchParams();
 
     useEffect(() => {
+        console.log(datasets)
+        console.log(searchParams.get('filter'))
         if (labels && datasets) {
             // Calculate totals for each label
             const totals = labels.map((_, i) => {
                 return datasets.reduce((sum, dataset) => sum + (dataset.data[i] || 0), 0);
             });
+            
 
             // Convert data to percentages, handling division by zero
             const percentageDatasets = datasets.map(dataset => {
@@ -58,6 +63,8 @@ export default function MyChart({ labels, datasets, qTitle, barType }) {
                     },
                 }
             });
+
+            
 
             return () => {
                 if (chartInstance) {

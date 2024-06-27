@@ -22,12 +22,12 @@ export default function Page() {
 
   const filters = [
     {
-      name: 'Zones',
-      slug: 'zones',
+      name: 'None',
+      slug: 'none',
     },
     {
-      name: 'Gender',
-      slug: 'gender',
+      name: 'Age',
+      slug: 'age',
     },
     {
       name: 'Income',
@@ -47,7 +47,7 @@ export default function Page() {
       setCurrentFilter(filterParam);
     }
 
-    return setCurrentFilter('zones'); // Reset currentFilter state to 'zones' when component unmounts
+    return setCurrentFilter('none'); // Reset currentFilter state to 'zones' when component unmounts
   }, [pathname]);
 
   return (

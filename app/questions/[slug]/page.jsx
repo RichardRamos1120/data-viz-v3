@@ -4,6 +4,8 @@ import { fetchData } from '@/app/utils/fetchData';
 import MyChart from '@/app/components/MyChart';
 import { useSearchParams } from 'next/navigation'
 import {useRouter} from "next/navigation";
+import RegularChart from '@/app/components/RegularChart';
+import questionTitles from '@/app/components/QuestionTitles';
 
 
 
@@ -11,6 +13,7 @@ const processData = async (id) => {
     let raw = await fetchData(`https://data-viz-v3.vercel.app/data.csv`);
     // Get the current question data
     const result = raw.map((item) => item[`${id}`]);
+    
 
     // Filter out the empty strings and count the same data
     const data = result.reduce((acc, curr) => {
@@ -76,10 +79,10 @@ export default function Page({ params }) {
 
         else {
 
-            // Fetch the zones data
-            async function getDataZones() {
+            // fetch data without filter
+            async function getDataNormal() {
                 let chartData = await processData(id);
-                let chartZones = await processData("zone");
+                let chartZones = await processData(id);
                 let chartZonesArea = Object.keys(chartZones.data);
 
                 let chartAllData = Object.values(chartData.data);
@@ -89,7 +92,7 @@ export default function Page({ params }) {
 
                 for (let i = 0; i < chartZonesArea.length; i++) {
                     // Filter the data each for zone
-                    let chartDataFiltered = chartData.raw.filter((item) => item["zone"] === chartZonesArea[i]);
+                    let chartDataFiltered = chartData.raw.filter((item) => item[id] === chartZonesArea[i]);
 
                     // Get the current question data
                     const result = chartDataFiltered.map((item) => item[`${id}`]);
@@ -120,11 +123,58 @@ export default function Page({ params }) {
 
 
             }
+            
+
+            // // Fetch the zones data
+            // async function getDataZones() {
+            //     let chartData = await processData(id);
+            //     let chartZones = await processData("zone");
+            //     let chartZonesArea = Object.keys(chartZones.data);
+
+            //     let chartAllData = Object.values(chartData.data);
+            //     let labelsNew = Object.keys(chartData.data);
+
+            //     const datasetsNew = [];
+
+            //     for (let i = 0; i < chartZonesArea.length; i++) {
+            //         // Filter the data each for zone
+            //         let chartDataFiltered = chartData.raw.filter((item) => item["zone"] === chartZonesArea[i]);
+
+            //         // Get the current question data
+            //         const result = chartDataFiltered.map((item) => item[`${id}`]);
+
+            //         // Count the same data
+            //         const data = result.reduce((acc, curr) => {
+            //             if (curr === "") return acc;
+            //             if (!acc[curr]) {
+            //                 acc[curr] = 0;
+            //             }
+            //             acc[curr]++;
+            //             return acc;
+            //         }, {});
+
+            //         let newChartAllData = Object.values(data);
+
+            //         let randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+            //         datasetsNew.push({
+            //             label: chartZonesArea[i],
+            //             data: newChartAllData,
+            //             backgroundColor: colors[i],
+            //         });
+            //     }
+
+            //     setLabels(labelsNew);
+            //     setDatasets(datasetsNew);
+
+
+            // }
+
 
             //Fetch the Gender data
-            async function getDataGender() {
+            async function getDataAge() {
                 let chartData = await processData(id);
-                let chartZones = await processData("Q46");
+                let chartZones = await processData("Q44");
                 let chartZonesArea = Object.keys(chartZones.data);
 
                 let chartAllData = Object.values(chartData.data);
@@ -134,7 +184,7 @@ export default function Page({ params }) {
 
                 for (let i = 0; i < chartZonesArea.length; i++) {
                     // Filter the data each for zone
-                    let chartDataFiltered = chartData.raw.filter((item) => item["Q46"] === chartZonesArea[i]);
+                    let chartDataFiltered = chartData.raw.filter((item) => item["Q44"] === chartZonesArea[i]);
 
                     // Get the current question data
                     const result = chartDataFiltered.map((item) => item[`${id}`]);
@@ -256,8 +306,8 @@ export default function Page({ params }) {
 
             }
 
-            if (searchParams.get('filter') === 'gender') {
-                getDataGender();
+            if (searchParams.get('filter') === 'age') {
+                getDataAge();
 
             }else if (searchParams.get('filter') === 'ethnicity') {
                 getDataEthnicity();
@@ -266,7 +316,7 @@ export default function Page({ params }) {
                 getDataIncome();
             }
 
-            else getDataZones();
+            else getDataNormal();
 
 
 
@@ -284,7 +334,12 @@ export default function Page({ params }) {
 
     return (
         <section>
-            <MyChart labels={labels} datasets={datasets} qTitle={id} barType={barType} />
+            {searchParams.get('filter') === 'none' || searchParams.get('filter') === null 
+            
+            ? <RegularChart labels={labels} datasets={datasets} qTitle={questionTitles[id]} barType={barType} />
+            : <MyChart labels={labels} datasets={datasets} qTitle={questionTitles[id]} barType={barType} />
+           
+            }
         </section>
     );
 }
