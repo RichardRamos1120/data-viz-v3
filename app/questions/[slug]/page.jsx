@@ -171,6 +171,17 @@ export default function Page({ params }) {
             // }
 
 
+            // sort the age data
+
+            // Function to sort by age range label
+            async function sortByAgeLabel(arr) {
+                return arr.sort((a, b) => {
+                let ageA = parseInt(a.label.split('-')[0]);
+                let ageB = parseInt(b.label.split('-')[0]);
+                return ageA - ageB;
+                });
+            }
+
             //Fetch the Gender data
             async function getDataAge() {
                 let chartData = await processData(id);
@@ -180,7 +191,7 @@ export default function Page({ params }) {
                 let chartAllData = Object.values(chartData.data);
                 let labelsNew = Object.keys(chartData.data);
 
-                const datasetsNew = [];
+                let datasetsNew = [];
 
                 for (let i = 0; i < chartZonesArea.length; i++) {
                     // Filter the data each for zone
@@ -208,6 +219,8 @@ export default function Page({ params }) {
                         data: newChartAllData,
                         backgroundColor: colors[i],
                     });
+
+                    datasetsNew = await sortByAgeLabel(datasetsNew);
                 }
 
                 setLabels(labelsNew);
