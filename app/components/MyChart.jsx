@@ -8,8 +8,8 @@ export default function MyChart({ labels, datasets, qTitle, barType }) {
     const searchParams = useSearchParams();
 
     useEffect(() => {
-        console.log(datasets)
-        console.log(searchParams.get('filter'))
+        // console.log(datasets)
+        // console.log(searchParams.get('filter'))
         if (labels && datasets) {
             // Calculate totals for each label
             const totals = labels.map((_, i) => {

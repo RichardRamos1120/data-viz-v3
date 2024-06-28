@@ -121,6 +121,7 @@ body{
 }
 
 .main-filter-filter{
+    width: 100%;
     h2{
         font-size: 1.8rem;
         font-weight: 700;
@@ -146,4 +147,42 @@ body{
 
 .topbarSearch{
     z-index: 999 !important
+}
+
+.right-filters-container{
+   
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    >*{
+
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        min-width: 36rem;
+        flex-grow: 0;
+        padding: 2rem;
+        gap: 1rem;
+        display: flex;
+        flex-direction: column;
+        
+        align-items: center;
+
+        h2{
+            align-self: flex-start;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        *{
+            font-family: sans-serif;
+        }
+        select{
+            padding: 1rem;
+            font-size: 1.6rem;
+            width: 100%;
+        }
+    }
 }

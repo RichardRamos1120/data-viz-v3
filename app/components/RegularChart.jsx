@@ -8,7 +8,7 @@ export default function RegularChart({ labels, datasets, qTitle, barType }) {
     const searchParams = useSearchParams();
 
     useEffect(() => {
-        console.log(datasets);
+        // console.log(datasets);
         let regularChartLabel = [];
         let regularChartData = [];
         let regularChartbgColor = [];
@@ -18,7 +18,7 @@ export default function RegularChart({ labels, datasets, qTitle, barType }) {
             regularChartData.push(data.data[0]);
             regularChartbgColor.push(data.backgroundColor)
         });
-        console.log(regularChartData);
+        // console.log(regularChartData);
 
         if (labels && datasets) {
             const chartInstance = new Chart(myChart.current, {

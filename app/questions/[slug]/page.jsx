@@ -6,13 +6,22 @@ import { useSearchParams } from 'next/navigation'
 import {useRouter} from "next/navigation";
 import RegularChart from '@/app/components/RegularChart';
 import questionTitles from '@/app/components/QuestionTitles';
+import useStore from '@/app/store/useStore';
 
 
 
-const processData = async (id) => {
+const processData = async (id,state) => {
+
     let raw = await fetchData(`https://data-viz-v3.vercel.app/data.csv`);
-    // Get the current question data
-    const result = raw.map((item) => item[`${id}`]);
+    
+
+    if (state !== "all") {
+        raw = raw.filter((item) => item["zone"] === state);
+    }
+
+
+    // console.log(filteredData)
+    let result = raw.map((item) => item[`${id}`]);
     
 
     // Filter out the empty strings and count the same data
@@ -29,6 +38,7 @@ const processData = async (id) => {
 };
 
 export default function Page({ params }) {
+    const { state, setState } = useStore();
     const searchParams = useSearchParams();
     const colors = [
         'rgb(109, 110, 112)',
@@ -71,7 +81,7 @@ export default function Page({ params }) {
 
     const router = useRouter();
     useEffect(() => {
-
+        
         // Redirect to login page if user is not admin
         if (localStorage.getItem("user") !== "admin") {
             router.push('/login')
@@ -81,13 +91,14 @@ export default function Page({ params }) {
 
             // fetch data without filter
             async function getDataNormal() {
-                let chartData = await processData(id);
-                let chartZones = await processData(id);
+                
+                let chartData = await processData(id,state);
+                let chartZones = await processData(id,state);
                 let chartZonesArea = Object.keys(chartZones.data);
 
                 let chartAllData = Object.values(chartData.data);
                 let labelsNew = Object.keys(chartData.data);
-
+                
                 const datasetsNew = [];
 
                 for (let i = 0; i < chartZonesArea.length; i++) {
@@ -184,8 +195,8 @@ export default function Page({ params }) {
 
             //Fetch the Gender data
             async function getDataAge() {
-                let chartData = await processData(id);
-                let chartZones = await processData("Q44");
+                let chartData = await processData(id,state);
+                let chartZones = await processData("Q44",state);
                 let chartZonesArea = Object.keys(chartZones.data);
 
                 let chartAllData = Object.values(chartData.data);
@@ -231,8 +242,8 @@ export default function Page({ params }) {
 
             //Fetch the Ethnicity data
             async function getDataEthnicity() {
-                let chartData = await processData(id);
-                let chartZones = await processData("Q45");
+                let chartData = await processData(id,state);
+                let chartZones = await processData("Q45",state);
                 let chartZonesArea = Object.keys(chartZones.data);
 
                 let chartAllData = Object.values(chartData.data);
@@ -276,8 +287,8 @@ export default function Page({ params }) {
 
             //Fetch the Income data
             async function getDataIncome() {
-                let chartData = await processData(id);
-                let chartZones = await processData("Q47");
+                let chartData = await processData(id,state);
+                let chartZones = await processData("Q47",state);
                 let chartZonesArea = Object.keys(chartZones.data);
 
                 let chartAllData = Object.values(chartData.data);
@@ -343,7 +354,7 @@ export default function Page({ params }) {
 
 
         
-    }, [id, searchParams.get('filter')]); // Re-run effect when id or filterValue changes
+    }, [id, searchParams.get('filter'),state]); // Re-run effect when id or filterValue changes
 
     return (
         <section>

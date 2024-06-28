@@ -1,6 +1,7 @@
 import QuestionNav from '@/app/components/QuestionNav';
 import MainFilter from '@/app/components/filter/MainFilter';
 import SearchBar from '@/app/components/SearchBar';
+import MainDropdown from '../components/filter/MainDropdown';
 
 
 export default function Layout({ children }) {
@@ -15,7 +16,10 @@ export default function Layout({ children }) {
         <QuestionNav/>
         <div>{children}</div>
         {/* Pass filter value and handler function as props */}
-        <MainFilter />
+        <div className="right-filters-container">
+          <MainFilter />
+          <MainDropdown />
+        </div>
       </main>
     </>
   );
