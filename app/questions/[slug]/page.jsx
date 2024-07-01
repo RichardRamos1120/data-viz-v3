@@ -360,8 +360,8 @@ export default function Page({ params }) {
         <section>
             {searchParams.get('filter') === 'none' || searchParams.get('filter') === null 
             
-            ? <RegularChart labels={labels} datasets={datasets} qTitle={questionTitles[id]} barType={barType} />
-            : <MyChart labels={labels} datasets={datasets} qTitle={questionTitles[id]} barType={barType} />
+            ? <RegularChart labels={labels} datasets={datasets} qTitle={questionTitles[id]} barType={barType} className="myChart-container" />
+            : <MyChart labels={labels} datasets={datasets} qTitle={questionTitles[id]} barType={barType} className="myChart-container" />
            
             }
         </section>
