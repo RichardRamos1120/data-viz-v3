@@ -13,7 +13,7 @@ export default function MainDropdown() {
   } 
 
   return (
-    <div>
+    <div class="maindropdown-container">
         <h2>Current Zone</h2>
         <select name="zoneDropdown" id="zoneDropdown" onChange={(e)=> changeZone(e)}>
             <option value="all">All</option>

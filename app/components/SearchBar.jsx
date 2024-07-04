@@ -93,7 +93,9 @@ const SearchBar = () => {
 
     return (
         <section className="topnav">
-            <Image src="/logo.svg" alt="logo" width={250} height={250} />
+            <Link href="/questions">
+                <Image src="/logo.svg" alt="logo" width={250} height={250} />
+            </Link>
             <div id="searchbar">
             <div ref={searchWrapperRef}>
                 <div id="search-wrapper">
